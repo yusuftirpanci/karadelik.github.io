@@ -1,0 +1,99 @@
+
+
+
+<?php 
+
+if($_POST){
+$diger = 'mime-version: 1.0'."\r\n";
+$diger .= 'content-type: text/html; charset=utf-8'."\r\n";	
+$isim = $_POST["isim"];
+$konu =  $_POST["konu"];
+$eposta = $_POST["eposta"];
+$mesaj = $_POST["mesaj"];
+
+if(!filter_var($eposta, FILTER_VALIDATE_EMAIL)){
+	
+	echo "Lütfen bilgilerinizi doğru ve eksiksiz bir biçimde yazınız.";
+	
+	
+}elseif(!$isim || !$mesaj || !$eposta){
+	
+	echo "lutfen isim, eposta ve mesajınızı bos bırakmayın";
+	
+	
+}else{
+
+$kime = "mehmet_cemil_nuralp@hotmail.com";
+
+$icerik = "isim :  ".$isim."<br/> ".
+
+          "esposta:  ".$eposta. " <br/> mesajınız <br/> ".$mesaj;
+		  
+	$diger .= "From: ".$eposta;	  
+
+ $gonder = mail($kime,$konu,$icerik,$diger);
+
+if($gonder){
+	
+	echo "mesajınız basarılı bir sekilde gonderilmistir yonlendiriliyorsunuz.. ";
+	     header("refresh: 2; url=index.php");
+}
+}
+}
+
+else{
+	
+	echo '<form action="" method="post"> 
+<h1>İletişim Formu</h1>
+<table> 
+<tr> 
+<td>İsim Soyisim: </td>
+<td><input type="text" name="isim" id="" /></td>
+</tr>
+
+<tr> 
+<td>Form Konusu: </td>
+<td><select name="konu" id=""> 
+
+<option >UZAY</option>
+<option >BOŞLUK</option>
+<option >KARA DELİK</option>
+<option >ÜNLÜ İNSANLAR HAKKINDA</option>
+<option >SİTE HAKKINDA</option>
+<option >DİĞER</option>
+
+</select></td>
+</tr>
+
+
+
+
+<tr> 
+<td>E-posta: </td>
+<td><input type="text" name="eposta" id="" /></td>
+</tr>
+<tr> 
+<td>Mesaj: </td>
+<td><textarea name="mesaj" cols="30" rows="10"></textarea></td>
+</tr>
+<tr> 
+<td></td>
+<td><input type="submit" value="Gönder" /></td>
+</tr>
+</table>
+
+
+</form>';
+	
+	
+	
+}
+
+
+?>
+
+
+
+
+
+
